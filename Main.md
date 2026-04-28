@@ -67,12 +67,12 @@
 
 ####
 # 3. Pathology Simulation
+GLIA
+
 
 ####
 ## 待考虑
-1. GLIA
-
-2. GliomaSolver
+1. GliomaSolver
     需要先跑通`BrainDeformation`,再参考`PatientInference`完成迭代设计
     详见`PathologySimulation\GliomaSolver\GliiomaSolver_.md`
 ####
