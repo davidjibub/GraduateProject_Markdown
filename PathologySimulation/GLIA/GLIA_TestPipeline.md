@@ -1,3 +1,18 @@
+---
+type:
+  - plan
+  - test
+status: active
+module: 使用Brats肿瘤数据进行GLIA测试
+period:
+tags:
+  - test
+topic:
+  - pathology simulation
+created: 2026-04-27
+thesis: "[[GLIA Pathology Simulation Module Overview]]"
+---
+# 数据来源备注
 源数据：
 `D:\Learing_TANG\GraduateProject\Data\Brats2024\BraTS_GLI\train\BraTS-GLI-00006-000`
 工作路径：
@@ -25,9 +40,7 @@ GLIA数据要求：
       atlas_003_t1_aff2template.nii.gz
 
 ```
-
-
-## 肿瘤患者数据
+## 基于Brats生成肿瘤患者patient数据
 ```
 patient_001_seg_aff2template.nii.gz
 patient_001_vt_aff2template.nii.gz
@@ -35,20 +48,22 @@ patient_001_t1ce_aff2template.nii.gz
 patient_001_flair_aff2template.nii.gz
 ```
 ### 1. Segment
+**Theory：**
 使用nnunet完成肿瘤分割
+**Practice：**
 这里直接使用ground truth
 `D:\Learing_TANG\GraduateProject\CodeProject\PathologySimulation\GLIA-master\patientdata\BraTS-GLI-00006-000-seg.nii.gz`
 
-
 ### 2. Inpainting（可选）
+**Theory：**
 使用fastwdm进行修复，使用Fastsurfer-neuroLIT进行修复
 1. 二值化seg
 生成`BraTS-GLI-00006-000-mask.nii.gz`
-
 2. 自动化docker指令
+**Practice：**
+直接使用 synthseg -robust进行测试
 
 生成docker指令
-
 ```
 输入一个病例文件夹路径
 自动查找其中唯一的 *-t1n.nii.gz 和 *-mask.nii.gz
@@ -76,8 +91,6 @@ docker run --gpus "device=all" --ipc=host --ulimit memlock=-1 --ulimit stack=671
 
 ```
 
-
-
 ### 3. SynthSeg
 艾影PC上完成
 ```
@@ -97,12 +110,9 @@ GLIA 对 seg 要求为 `[wm=6, gm=5, vt=7, csf=8, ed=2, nec=1, en=4]`
 `patient_001_seg.nii.gz`
 `patient_001_vt.nii.gz`
 
-## Altas数据
+## 基于IXI生成altas数据
 使用IXI数据集，需要进行HD-BET和组织分割
-
-
 ### 1. HD-BET
-
 ```
 conda activate neuroLIT
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
@@ -111,8 +121,6 @@ pip install hd-bet
 脚本已经完成并放在 `.\GLIA-master\patientdata\Code\HD_BET\run_hd_bet_ixi.py`
 它会在 neuroLIT 环境里调用 hd-bet，默认处理这 3 个文件：
 IXI566-HH-2535-T1.nii.gz、IXI567-HH-2536-T1.nii.gz、IXI568-HH-2607-T1.nii.gz，并把剥离后的结果写到 `.\GLIA-master\patientdata\BraTS-GLI-00006-000\IXI_HD_BET`
-
-
 输出：
 ```
 IXI566-HH-2535-T1.nii.gz
@@ -152,8 +160,6 @@ patient_001_vt.nii.gz             (不应用形变)
 patient_001_t1ce.nii.gz           (不应用形变)
 patient_001_flair.nii.gz          (不应用形变)
 ```
-
-
 
 脚本在 `.\GLIA-master\patientdata\Code\Register\register_ixi_atlas_to_patient.py`
 - 在 IXI_HD_BET 中自动配对 atlas T1 和 *-t1n-robust-parc.nii.gz
@@ -248,16 +254,20 @@ Codex完成生成
 1. 用 patient_001_seg.nii.gz 生成 data.nc
 2. 先跑 inverse_til 得到 c0_rec.nc
 3. 用 3 个 atlas 的 warped 文件分别跑 inverse_masseffect
-### <font color=red>患者数据的测试流程见飞书 《GLIA 远程服务器SSH》</font>
+
+后续服务器测试过程： <font color=red>患者数据的测试流程见飞书 《GLIA 远程服务器SSH》</font>
+本地文件：[[GLIA_RemoteServer_SSH]]
 
 ## GLIA结果分析
 相对有潜在临床/科研解释价值的是：
+
 | 文件                          | 价值                       |
 | --------------------------- | ------------------------ |
 | `c0_rec.nc`                 | 估计肿瘤初始位置，研究肿瘤起源和生长轨迹     |
 | `c_rec_final.nc`            | 检查模型是否能重建当前肿瘤            |
 | `seg_rec_final.nc`          | 查看模型重建后的组织结构             |
 | `displacement_rec_final.nc` | 观察 mass effect 造成的组织位移强度 |
-| `disp_x/y/z_rec_final.nc`   | 定量分析三维形变场                |
+| `disp_x/y/z_rec_final.nc`   | 观察 mass effect 造成的组织位移强度 |
+| `disp_x/y/z_rec_final.nc`   | 观察 mass effect 造成的组织位移强度 |
 | `vt_rec_final.nc`           | 观察脑室受压/变形                |
 | `mri_rec_final.nc`          | 可视化变形后的 atlas 形态         |

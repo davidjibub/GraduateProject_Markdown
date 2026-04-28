@@ -1,0 +1,265 @@
+{
+  "main": {
+    "id": "0a4963474cab7665",
+    "type": "split",
+    "children": [
+      {
+        "id": "0c93da3225a14da2",
+        "type": "split",
+        "children": [
+          {
+            "id": "49522de12ecc34d5",
+            "type": "tabs",
+            "dimension": 56.801909307875896,
+            "children": [
+              {
+                "id": "51eb29ee4c491d64",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "PathologySimulation/GLIA/GLIA_Mode_TIL.md",
+                    "mode": "source",
+                    "source": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "GLIA_Mode_TIL"
+                }
+              }
+            ]
+          },
+          {
+            "id": "bfff945721371de9",
+            "type": "split",
+            "dimension": 43.198090692124104,
+            "children": [
+              {
+                "id": "adb666bcc6d88dff",
+                "type": "tabs",
+                "dimension": 55.48076923076923,
+                "children": [
+                  {
+                    "id": "4b82e40327897a28",
+                    "type": "leaf",
+                    "state": {
+                      "type": "markdown",
+                      "state": {
+                        "file": "Graduate Project Markdown.md",
+                        "mode": "source",
+                        "source": false
+                      },
+                      "icon": "lucide-file",
+                      "title": "Graduate Project Markdown"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "b08799a958b55c02",
+                "type": "tabs",
+                "dimension": 44.51923076923077,
+                "children": [
+                  {
+                    "id": "0e810053cb30fc4e",
+                    "type": "leaf",
+                    "state": {
+                      "type": "markdown",
+                      "state": {
+                        "file": "PathologySimulation/GLIA Pathology Simulation Module Overview.md",
+                        "mode": "source",
+                        "source": false
+                      },
+                      "icon": "lucide-file",
+                      "title": "GLIA Pathology Simulation Module Overview"
+                    }
+                  }
+                ]
+              }
+            ],
+            "direction": "horizontal"
+          }
+        ],
+        "direction": "vertical"
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "a58f43a12298f8d6",
+    "type": "split",
+    "children": [
+      {
+        "id": "10bf0c9e348b7024",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e5a109cccd107400",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "0ae1c0d178fe7ece",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "153ed2218eaad937",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "right": {
+    "id": "43c7c6d3e153770c",
+    "type": "split",
+    "children": [
+      {
+        "id": "137445db16bb5717",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "106041f14dbc4413",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "PathologySimulation/GLIA/GLIA_Mode_TIL.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "GLIA_Mode_TIL 的反向链接列表"
+            }
+          },
+          {
+            "id": "660008976954b3f4",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "PathologySimulation/GLIA/GLIA_Mode_TIL.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "GLIA_Mode_TIL 的出链列表"
+            }
+          },
+          {
+            "id": "38aad8026710fe51",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "521f4574285a0732",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "d1bd79f2ab9e587b",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "PathologySimulation/GLIA/GLIA_Mode_TIL.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "GLIA_Mode_TIL 的大纲"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false
+    }
+  },
+  "active": "e5a109cccd107400",
+  "lastOpenFiles": [
+    "PathologySimulation/GLIA/GLIA_RemoteServer_SSH.md",
+    "PathologySimulation/GLIA/GLIA_TestPipeline.md",
+    "PathologySimulation/GLIA/ServerSetup.md",
+    "PathologySimulation/GLIA/GLIA_Mode_TIL.md",
+    "PathologySimulation/GLIA/GLIA_Mode_General.md",
+    "PathologySimulation/GLIA Pathology Simulation Module Overview.md",
+    "Graduate Project Markdown.md",
+    "Inpainting/fastWDM/fastwdm0410.md",
+    "Inpainting/fastWDM/fastwdm0406.md",
+    "毕设总览.md",
+    "PathologySimulation/GLIA/NoUse/Server 444.md",
+    "PathologySimulation/GliomaSolver/nouse.md",
+    "Main.md",
+    "Attachments",
+    "未命名.base",
+    "2026-04-28.md",
+    "未命名.canvas",
+    "Inpainting/fastWDM/fastwdm0427.md"
+  ]
+}

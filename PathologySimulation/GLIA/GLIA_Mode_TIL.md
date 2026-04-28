@@ -1,10 +1,26 @@
+---
+type:
+  - project
+  - thesis
+status: done
+thesis: "[[GLIA_Mode_General]]"
+module: 对GLIA TIL模式的解析
+tags:
+  - thesis
+  - project
+topic:
+  - pathology simulation
+  - github code based
+created: 2026-04-28
+---
+
 # Inverse.py 反演肿瘤起点与生长参数
 
 ### 输入GLIA
 ```
 patient_seg
 altas_seg
-altas_t1
+
 ```
 由`patient_seg`提供
 1. 当前肿瘤观测值`d1`

@@ -1,3 +1,18 @@
+---
+type:
+  - thesis
+  - project
+status: done
+module: GLIA模式总览分析
+tags:
+  - thesis
+  - project
+created: 2026-04-25
+topic:
+  - pathology simulation
+  - github code based
+thesis: "[[GLIA Pathology Simulation Module Overview]]"
+---
 
 ## forward.py：正向模拟，不是临床反推
 
