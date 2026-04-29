@@ -1,4 +1,4 @@
----  
+---
 type: summary
 status: active  
 thesis: 
@@ -78,6 +78,7 @@ testing
 system-design
 pathology simulation
 github code based #对github仓库代码的解析
+math-learning  #数学公式原理的解析
 ```
 可理解为：
 ```

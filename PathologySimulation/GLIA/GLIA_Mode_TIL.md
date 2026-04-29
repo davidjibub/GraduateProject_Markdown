@@ -80,12 +80,13 @@ $$c_0(x) = \sum_{i=1}^{n} p_i*φ_i(x)$$
     R(x) = 8    * WM(x) + 0 * GM(x) + possible CSF term
     ```
 2. PDE：
+[[GLIA PDE +elasticity]]
 $$\frac{∂c}{∂t}​=∇⋅(kappa*K_{atlas​}(x)*∇c)+rho*R_{atlas}​(x)*c*(1−c)$$
 or $$\frac{∂c}{∂t}​=∇⋅(K(x)*∇c)+R​(x)*c*(1−c)$$
 
 
   
-3. 从当前的`c0(x)`开始，使用当前的`kappa`，`rho`生长，时间步`nt_inv = 40`，间隔`dt_inv = 0.025`，得到t=1时刻预测得到的肿瘤密度分布图`c1_pred(x)`
+4. 从当前的`c0(x)`开始，使用当前的`kappa`，`rho`生长，时间步`nt_inv = 40`，间隔`dt_inv = 0.025`，得到t=1时刻预测得到的肿瘤密度分布图`c1_pred(x)`
 
 <font color=purple>超参数</font>：
 ```
@@ -104,7 +105,7 @@ p
 ```
 
 #### Step4：计算loss
-对全脑进行PDE预测生长烟花，但是仅在 observation operator `O`区域计算loss
+对全脑进行PDE预测生长烟花，但是仅在 observation operator[^1] `O`区域计算loss
 $$
     min_{p,rho,kappa}  \frac{1}{2} ||O*c_1^{pred} - d1|| + \beta||p||
 $$
@@ -150,3 +151,6 @@ p:决定TIL在哪里
 rho：决定局部增殖
 kappa：决定空间浸润
 ```
+
+[^1]: 如何根据loss优化参数，迭代遍历还是反向传播类似？
+	
