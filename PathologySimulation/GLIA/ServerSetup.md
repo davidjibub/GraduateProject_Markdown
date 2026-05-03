@@ -10,7 +10,7 @@ thesis: "[[GLIA Pathology Simulation Module Overview]]"
 下面是把我们前面所有排错过程整理成的一份 **“新服务器从零部署 GLIA 一次性流程”**。你可以把它保存成 `GLIA_deploy.md`，以后换新服务器时照着做。
 
 <font color=red>testdata的测试流程见飞书 《GLIA 远程服务器SSH》
-本地文件为：[[GLIA_RemoteServer_SSH]]
+本地文件为：[[GLIA_RemoteServer_TestPipeline]]
 ---
 
 # GLIA 新服务器从零部署流程

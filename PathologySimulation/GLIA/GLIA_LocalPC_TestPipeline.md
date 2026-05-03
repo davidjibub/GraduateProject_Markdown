@@ -10,7 +10,7 @@ tags:
 topic:
   - pathology simulation
 created: 2026-04-27
-thesis: "[[GLIA Pathology Simulation Module Overview]]"
+thesis: "[[GLIA_Pipeline]]"
 ---
 # 数据来源备注
 源数据：
@@ -256,7 +256,7 @@ Codex完成生成
 3. 用 3 个 atlas 的 warped 文件分别跑 inverse_masseffect
 
 后续服务器测试过程： <font color=red>患者数据的测试流程见飞书 《GLIA 远程服务器SSH》</font>
-本地文件：[[GLIA_RemoteServer_SSH]]
+本地文件：[[GLIA_RemoteServer_TestPipeline]]
 
 ## GLIA结果分析
 相对有潜在临床/科研解释价值的是：
