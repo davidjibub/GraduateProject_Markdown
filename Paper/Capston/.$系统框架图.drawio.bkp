@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.17">
   <diagram name="第 1 页" id="_BZ2ye_e8Kfw4zSB-hfF">
-    <mxGraphModel dx="4044" dy="1408" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="3703" dy="1207" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -305,24 +305,6 @@
         </mxCell>
         <mxCell id="mooHiUCtoPff50xnScoe-124" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 30px;&quot;&gt;Framework&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="120" y="290" width="60" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="swJdltYgYGizV07ev3R6-1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;dashed=1;strokeWidth=5;strokeColor=#adadad;" vertex="1" parent="1">
-          <mxGeometry x="-550" y="1200" width="160" height="750" as="geometry" />
-        </mxCell>
-        <mxCell id="swJdltYgYGizV07ev3R6-2" value="&lt;b&gt;IXI Dataset&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
-          <mxGeometry x="-530" y="1740" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="swJdltYgYGizV07ev3R6-3" value="&lt;b&gt;Patient&lt;/b&gt;&lt;div&gt;( t1n/ t1c/ t2w/ t2f )&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
-          <mxGeometry x="-530" y="1330" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="swJdltYgYGizV07ev3R6-4" value="&lt;b&gt;Patient&lt;/b&gt;&lt;div&gt;( DTI )&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
-          <mxGeometry x="-530" y="1220" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="swJdltYgYGizV07ev3R6-5" value="&lt;b&gt;Patient&lt;/b&gt;&lt;div&gt;( MRS )&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
-          <mxGeometry x="-530" y="1450" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="swJdltYgYGizV07ev3R6-6" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 30px;&quot;&gt;Input&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="-500" y="1150" width="60" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

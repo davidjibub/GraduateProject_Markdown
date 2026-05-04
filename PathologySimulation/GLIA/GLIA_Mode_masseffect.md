@@ -62,18 +62,191 @@ inverse_TIL:
 inverse_masseffect:
     c0 默认是已知的，直接作为 forward simulation 的初始条件
 ```
+对比：TIL 待优化未知数为：
+$$  
+x = [p, \rho, \kappa]  
+$$
 
-#### Step3：reaction PDE
+mass effect 待优化未知数为：
+$$x=[γ,ρ,κ]$$
+- $\gamma$ 控制 tumor-induced force / mass effect 强度；  
+- $\rho$ 控制肿瘤增殖；  
+- $\kappa$ 控制肿瘤扩散
+
+#### Step3：reaction PDE（forward）
+
+>注意：Step3 是一次 forward solve，在优化器看来，只用于计算当前参数 xk 下的预测结果，参数不在 Step3 内更新
+
 `reaction-advection-diffusion PDE coupled with linear elasticity`
 - 肿瘤自己会增殖  
 - 肿瘤会扩散  
 - 肿瘤会因为组织运动而被 advect  
 - 组织也会被肿瘤产生的力推动
 
+```
+在每个时间步 tn -> tn+1：
+1. 用当前速度场 advect tumor/tissue
+2. 处理 diffusion
+3. 处理 reaction
+4. 更新总肿瘤负荷
+5. 由 tumor burden 产生 mechanical force
+6. 解 screened linear elasticity 得到 displacement
+7. 由 displacement 得到 velocity，供下一时间步 advection 使用
+```
+
+forward solve 的输入是：
+	$\gamma_k, \rho_k, \kappa_k, altastissue$
+
+输出是：
+	$c_1^pred​, VT^pred, WM^pred, GM^pred, CSF^pred, u, v$
+
+#### Step4：计算 loss / objective
+
+>forward simulation 结束后，GLIA 得到当前参数下的：  
+> - 终态肿瘤预测图 `c1_pred`  
+> - 形变后的组织结构图，尤其是 `VT_pred`
+
+mass-effect 模式的 objective 包括两部分：  
+$$  
+J(x)  
+=  
+J_{\text{tumor}}(x)  
++  
+J_{\text{brain}}(x)  
+$$
+肿瘤项：  
+$$  
+J_{\text{tumor}}  
+=  
+\frac12 |\Omega|_h  
+\|O c(1;x)-d_1\|_2^2  
+$$ 
+脑组织项，当前代码主要使用 ventricle mismatch：  
+  
+$$  
+J_{\text{brain}}  
+=  
+\frac12 |\Omega|_h  
+\|VT^{pred}(x)-VT^{patient}\|_2^2  
+$$
+因此：  
+  
+$$  
+J(x)  
+=  
+\frac12 |\Omega|_h  
+\|O c(1;x)-d_1\|_2^2  
++  
+\frac12 |\Omega|_h  
+\|VT^{pred}(x)-VT^{patient}\|_2^2  
+$$  
+注意：GM/WM/CSF mismatch 在代码中有相关实现痕迹，但当前被注释掉，实际 objective 主要使用 VT mismatch。
+
+
+#### Step5：计算 gradient
+
+> 这是 mass-effect 和 TIL 最大的不同点
+
+mass-effect 用的是 **forward finite difference gradient** 而非 adjoint
+
+先计算当前参数的 objective：  
+$$  
+J_b = J(x)  
+$$
+然后对每个参数分别做小扰动：  
+$$  
+x_i^{+}=x+h e_i  
+$$
+重新执行一次完整 forward simulation，并计算：  
+$$  
+J_f = J(x+h e_i)  
+$$
+于是：  
+$$  
+\frac{\partial J}{\partial x_i}  
+\approx  
+\frac{J_f-J_b}{h}  
+$$
+其中：  
+  
+$$  
+x_i \in \{\gamma,\rho,\kappa\}  
+$$
+  
+因此，若当前反演三个参数 `[gamma,rho,kappa]`，一次 gradient evaluation 大约需要：  
+- 1 次 baseline forward solve；  
+- 3 次 perturbed forward solve；  
+  
+总共约 4 次 forward solve
+
+#### Step6：TAO 更新参数
+
+>这一步和 TIL 在优化器层面是类似的：  
+>GLIA 把 `J(x)` 和 `∇J(x)` 返回给 TAO，TAO 决定下一步怎么走
+
+GLIA 将当前参数下的：  
+$$  
+J(x_k), \quad \nabla J(x_k)  
+$$
+返回给 TAO
+
+TAO 根据内部优化方法，例如 line search / quasi-Newton / bound-constrained optimizer，决定更新方向：  
+$$  
+s_k  
+$$
+并更新参数：  
+$$  
+x_{k+1}  
+=  
+x_k+\alpha_k s_k  
+$$  
+其中：  
+$$  
+x_k=[\gamma_k,\rho_k,\kappa_k]  
+$$  
+更新后得到：  
+  
+$$  
+x_{k+1}  
+=  
+[\gamma_{k+1},\rho_{k+1},\kappa_{k+1}]  
+$$
+
+#### （Step3：重新forward ）
+
+```
+新的 gamma、rho、kappa
+        ↓
+重新 forward simulation
+        ↓
+重新计算 loss
+        ↓
+重新计算 finite-difference gradient
+        ↓
+TAO 再更新
+```
+
+#### Step7：输出反演结果
+
+当 TAO 满足收敛条件后，得到最终参数：
+$$
+x^*=[\gamma^*,\rho^*,\kappa^*]
+$$
+这组参数代表：
+- $\gamma^*$：最能解释 patient mass effect 的组织推挤强度；
+- $\rho^*$：最能解释 tumor growth 的增殖强度；
+- $\kappa^*$：最能解释 tumor spread 的扩散强度。
+
+最终 forward simulation 会给出：
+- 终态肿瘤预测图；
+- 形变后的组织结构；
+- 位移场；
+- 速度场；
+- 与 patient data 的 mismatch。
 
 
 
-# GLIA 时间步计算顺序
+# masseffect Step3 forward 详细计算顺序
 GLIA 不是把所有方程一次性组成一个巨大的完全耦合非线性系统同时解，而是用 **operator splitting**
 在一个时间步：$t^n→t^{n+1}$ 里面，把不同物理过程拆开依次计算
 
@@ -107,7 +280,9 @@ $$
 ==代表”组织被tumor推着移动，细胞浓度和组织标签也一起移动“==
 
 ## Step 2：diffusion
-然后处理会扩散的变量，例如 invasive cells 和 oxygen$$
+然后处理会扩散的变量，例如 invasive cells 和 oxygen
+
+$$
 \begin{aligned}
 \frac{\partial i}{\partial t}  
 =  
@@ -183,12 +358,20 @@ p,i,n,o
 \Rightarrow p,i,n,o.
 $$
 
+## （Step 1：advection） 
+
+用当前速度场 $v^n$ 搬运所有会随组织运动的量
+
+
 ## 问题解析：
+
+在学习过程中遇到的问题
+
 1. 为什么reaction-advection-diffusion PDE拆分成step 1 2 3？
 	总的PDE在实际数值计算时，常常不会“一口气”直接解这个完整方程，而是把它拆成几个更简单的子问题
 	$advection→diffusion→reaction$
-	这叫 **operator splitting，算子分裂**。$$
-\frac{\partial c}{\partial t}
+	这叫 operator splitting，算子分裂
+$$\frac{\partial c}{\partial t}
 =
 \underbrace{-\nabla\cdot(cv)}_{\text{advection}}
 +
@@ -221,7 +404,7 @@ $$
 		
 
 
-## 公式
+## 涉及公式
 肿瘤浓度 c 产生力 f， 力 f 造成位移 u， 位移 u 产生速度 v， 速度 v 搬运组织和肿瘤
 [[GLIA PDE +elasticity#^ec7277]] （应变张量）
 $$  
