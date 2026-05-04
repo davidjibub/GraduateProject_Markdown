@@ -30,13 +30,11 @@ D:\micromamba\root\envs\fastwdm3d\python.exe WDM3D\David_eval\training_analysis_
 1. loss_rec_train_val.png
 画训练 reconstruction loss 和验证 reconstruction loss。红色竖线是 best checkpoint，也就是你现在选中的最优模型步数
 => 模型收敛，best checkpoint 在 460000 step
-<!-- ![1](..\fastWDM\trainres_0410\loss_rec_train_val.png "Magic Gardens") -->
-<img src="..\fastWDM\trainres_0410\loss_rec_train_val.png" width="900" height="600">
-
+![[loss_rec_train_val.png]]
 2. loss_full_plus_masked_train_val.png
 当前 best checkpoint 就是按 loss/val_rec_full_plus_masked 选出来的
 注：在你当前这版代码里，val_rec 和 val_rec_full_plus_masked 实际上是一样的数值来源，所以这两条 validation 指标现在可以近似看成同一个 validation loss 的两个命名版本。也就是说，这两张图在 validation 部分的信息量很接近，但“full_plus_masked”那张更符合你现在的 best model 选择逻辑
-<img src="..\fastWDM\trainres_0410\loss_full_plus_masked_train_val.png" width="900" height="600">
+![[loss_full_plus_masked_train_val.png]]
 
 3. val_loss_zoom.png
 专门把 validation loss 后期放大来看。
@@ -50,7 +48,7 @@ D:\micromamba\root\envs\fastwdm3d\python.exe WDM3D\David_eval\training_analysis_
 结论：
 - best 在 460000，到 490000 只有非常轻微回升
 - 所以更像是“已经接近训练上限，后面收益很小”，而不是“后面突然坏掉”
-<img src="..\fastWDM\trainres_0410\val_loss_zoom.png" width="900" height="600">
+![[val_loss_zoom.png]]
 
 
 4. timing_metrics.png
@@ -67,7 +65,7 @@ D:\micromamba\root\envs\fastwdm3d\python.exe WDM3D\David_eval\training_analysis_
 - time/forward 占比很高
 - 所以当前瓶颈主要是计算，不是读数据
 - 想提速，优先考虑模型计算、显存策略、batch、mixed precision，不需要优先怀疑 DataLoader
-<img src="..\fastWDM\trainres_0410\timing_metrics.png" width="900" height="600">
+![[timing_metrics.png]]
 
 5. schedule_indicator.png
 训练过程状态指标，回答“训练过程有没有异常”，主要看：
@@ -77,7 +75,7 @@ D:\micromamba\root\envs\fastwdm3d\python.exe WDM3D\David_eval\training_analysis_
 怎么看：
 - 平稳波动：一般正常
 - 突然尖峰/断崖：可能要回头检查采样步使用、训练状态、数值稳定性
-<img src="..\fastWDM\trainres_0410\schedule_indicator.png" width="900" height="600">
+![[schedule_indicator.png]]
 
 
 ## 对Philips私有数据集进行测试

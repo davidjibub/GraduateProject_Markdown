@@ -80,6 +80,16 @@ mask = mask-unhealthy ∪ mask-healthy
 t1n-voided = t1n 在 mask 区域置零
 ```
 
+| 步骤                        | 规则                                                                                                             |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| 构建 unhealthy / tumor mask | 原始 BraTS seg 中 label 1、2、3 合并；去除 <800 voxels 小连通分量；填洞；因此包含 edema                                               |
+| 构建候选形状池                   | 对 whole-tumor 二值 mask 做 3D connected components；每个 disconnected compartment crop 成一个候选形状                       |
+| 选择候选形状                    | 根据当前病例 tumor 占 brain 的比例 `tumorSegmentation_p`，在候选大小分布的“相反侧”取样：大 tumor 配小 healthy mask，小 tumor 配大 healthy mask |
+| 形状增强                      | 随机 X/Y/Z 翻转；在 X-Y 和 Y-Z 平面随机 0°–360° 旋转                                                                        |
+| 选择位置                      | 在 brain 内且离 tumor 足够远的区域采样；随机取若干点，选距离 tumor 最远的点作为中心                                                           |
+| 有效性检查                     | 与 tumor 至少 5 voxel 欧氏距离；与 zero-T1/background 重叠不超过 25%；不满足则重试                                                  |
+| healthy mask 是否必须全在脑实质内   | 否。可重叠脑室、CSF、脑外背景，但 background overlap 被限制                                                                      |
+
 # 4.7 BraTS 1251 single split 训练
 把整个训练目录当作训练集使用
 - 输入
