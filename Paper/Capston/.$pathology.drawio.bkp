@@ -1,0 +1,126 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.17">
+  <diagram name="第 1 页" id="AzDa5SKOmSEUPmZLfSVy">
+    <mxGraphModel dx="2049" dy="1207" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="QxdZCD9gXXX32g6KajX2-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;curved=0;" edge="1" parent="1" source="QxdZCD9gXXX32g6KajX2-2" target="QxdZCD9gXXX32g6KajX2-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-2" value="&lt;b style=&quot;font-family: Verdana; font-size: 13px;&quot;&gt;A. 肿瘤分割&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;opacity=70;" vertex="1" parent="1">
+          <mxGeometry x="269" y="340" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;curved=0;" edge="1" parent="1" source="QxdZCD9gXXX32g6KajX2-4" target="QxdZCD9gXXX32g6KajX2-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-4" value="&lt;b&gt;Altas&lt;/b&gt;&lt;div&gt;(skull-stripped t1n)&lt;/div&gt;" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="370" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="QxdZCD9gXXX32g6KajX2-7" target="QxdZCD9gXXX32g6KajX2-30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="QxdZCD9gXXX32g6KajX2-7" target="QxdZCD9gXXX32g6KajX2-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-7" value="&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;b&gt;Seg&lt;/b&gt;&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;(ed/ nec/ en)&lt;/div&gt;" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="269" y="440" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;curved=0;" edge="1" parent="1" source="QxdZCD9gXXX32g6KajX2-10" target="QxdZCD9gXXX32g6KajX2-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="QxdZCD9gXXX32g6KajX2-10" target="QxdZCD9gXXX32g6KajX2-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-10" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;&lt;font face=&quot;Verdana&quot;&gt;患者多模态 sMRI&lt;/font&gt;&lt;/b&gt;&lt;div style=&quot;font-size: 13px;&quot;&gt;&lt;span style=&quot;font-family: RfRZ_hOL5jZH2PJbZL8D; background-color: initial;&quot;&gt;（&lt;/span&gt;&lt;span style=&quot;font-family: RfRZ_hOL5jZH2PJbZL8D; background-color: initial;&quot;&gt;T1n, T1c, T2w, FLAIR）&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="269" y="240" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="QxdZCD9gXXX32g6KajX2-12" target="QxdZCD9gXXX32g6KajX2-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-12" value="&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;b&gt;Pseudo-healthy Image&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;( t1n )&lt;/span&gt;&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="540" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;curved=0;" edge="1" parent="1" source="QxdZCD9gXXX32g6KajX2-14" target="QxdZCD9gXXX32g6KajX2-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-14" value="&lt;div&gt;&lt;b&gt;Labels&lt;/b&gt;&lt;/div&gt;&lt;div&gt;[ wm, gm, csf, ventricles ]&lt;/div&gt;" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="79" y="700" width="161" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-15" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;curved=0;" edge="1" parent="1" source="QxdZCD9gXXX32g6KajX2-16" target="QxdZCD9gXXX32g6KajX2-24">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="326" y="880" />
+              <mxPoint x="475" y="880" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-16" value="&lt;div&gt;&lt;b&gt;Patient Labels&lt;/b&gt;&lt;/div&gt;&lt;div&gt;( patient_seg/&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;patient_vt )&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;[ wm, gm, csf, vt, ed, en, nec ]&lt;/div&gt;" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="233.25" y="800" width="191.5" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="QxdZCD9gXXX32g6KajX2-18">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="570" y="630" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-18" value="&lt;div&gt;&lt;b&gt;Altas-to-Patient Space&lt;/b&gt;&lt;/div&gt;warped transform" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="600" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-19" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;curved=0;" edge="1" parent="1" source="QxdZCD9gXXX32g6KajX2-21" target="QxdZCD9gXXX32g6KajX2-22">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="570" y="559.9999999999998" />
+              <mxPoint x="570" y="830" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-20" value="Apply transform" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="QxdZCD9gXXX32g6KajX2-19">
+          <mxGeometry x="0.2653" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-21" value="&lt;div&gt;&lt;b&gt;Labels&lt;/b&gt;&lt;/div&gt;&lt;div&gt;[ wm, gm, csf, ventricles ]&lt;/div&gt;" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="599.5" y="530" width="160.5" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-22" value="&lt;b&gt;Altas Labels&lt;/b&gt;&lt;div&gt;(altas_seg/ altas_t1n)&lt;/div&gt;&lt;div&gt;[ wm, gm, csf, vt ]&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="599.5" y="800" width="160.5" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-23" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="QxdZCD9gXXX32g6KajX2-24" target="QxdZCD9gXXX32g6KajX2-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-24" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 15px;&quot;&gt;&lt;b&gt;&lt;span style=&quot;color: rgb(31, 35, 40); text-align: start;&quot;&gt;GLioblastoma&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;box-sizing: border-box; color: rgb(31, 35, 40); text-align: start;&quot;&gt;I&lt;/span&gt;&lt;span style=&quot;color: rgb(31, 35, 40); text-align: start;&quot;&gt;mage&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;box-sizing: border-box; color: rgb(31, 35, 40); text-align: start;&quot;&gt;A&lt;/span&gt;&lt;span style=&quot;color: rgb(31, 35, 40); text-align: start;&quot;&gt;nalysis&lt;/span&gt;&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;opacity=70;" vertex="1" parent="1">
+          <mxGeometry x="360" y="910" width="229.5" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-25" value="&lt;b&gt;Patient tumor Analysis&lt;/b&gt;&lt;div&gt;(&amp;nbsp;predicted cellularity map/&amp;nbsp;Pre-morbid Brain )&amp;nbsp;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="342.13" y="1000" width="265.25" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-26" value="valid" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="117.14285714285734" y="1107" as="geometry" />
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-27" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.4;entryDx=0;entryDy=0;entryPerimeter=0;curved=0;" edge="1" parent="1" source="QxdZCD9gXXX32g6KajX2-25">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="180" y="950" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-28" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;curved=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="QxdZCD9gXXX32g6KajX2-10" target="QxdZCD9gXXX32g6KajX2-30">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="269" y="270" as="sourcePoint" />
+            <mxPoint x="189" y="555" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="329" y="320" />
+              <mxPoint x="160" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="QxdZCD9gXXX32g6KajX2-30" target="QxdZCD9gXXX32g6KajX2-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-30" value="&lt;b style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;; font-size: 15px; text-wrap: nowrap;&quot;&gt;Inpainting&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;opacity=70;" vertex="1" parent="1">
+          <mxGeometry x="100" y="440" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="QxdZCD9gXXX32g6KajX2-31" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;&lt;font style=&quot;font-size: 13px;&quot; face=&quot;Verdana&quot;&gt;患者多模态 sMRI&lt;/font&gt;&lt;/b&gt;&lt;div style=&quot;font-size: 13px;&quot;&gt;&lt;font style=&quot;font-size: 13px;&quot;&gt;&lt;span style=&quot;font-family: RfRZ_hOL5jZH2PJbZL8D; background-color: initial;&quot;&gt;（&lt;/span&gt;&lt;span style=&quot;font-family: RfRZ_hOL5jZH2PJbZL8D; background-color: initial;&quot;&gt;T1n, T1c, T2w, FLAIR）&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="145" y="220" width="195" height="70" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

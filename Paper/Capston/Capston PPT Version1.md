@@ -160,7 +160,12 @@
 |mask-healthy|在健康脑组织中构造合成缺损，用于监督训练和定量评价|
 
 4. 网络框架图
+	#Todo
+
+5. 系统框架图
 	模块最后加上：修复影像 → FreeSurfer / registration / simulation
+	
+	![[inpainting.png|467]]
 
 ### 现有结果
 
@@ -168,6 +173,7 @@
 1. Loss
 	损失函数
 	train loss / valid loss
+		#Todo
 2. 模型超参数 [ pix2pix fastwdm ]
 
 |内容|示例|
@@ -190,6 +196,11 @@
 5. 下游任务验证图
 	- Original tumor T1 → FreeSurfer failed / unstable  
 	- Inpainted T1 → FreeSurfer success / better cortical metrics
+	[Origin]
+	![[Pasted image 20260505193525.png|241]]
+	[Inpainting]
+	![[Pasted image 20260505193658.png|240]]
+
 6. Baseline对比
 
 | 方法                  | MAE ↓ | SSIM ↑ | PSNR ↑ | FreeSurfer success ↑ |
@@ -237,6 +248,7 @@
 	- linear-screening elasticity
 	- ... [[GLIA_Mode_TIL]][[GLIA_Mode_masseffect]]
 	- 加入前向？？ #Todo 待确定？
+![[pathology.png]]
 
 ### 现有结果
 
@@ -276,6 +288,8 @@
 ### 现有结果
 1. 效果示意图
 	- （纤维束+肿瘤+肿瘤密度分布）
+
+![[XR.png]]
 
 # 总结与展望
 ## 现有工作

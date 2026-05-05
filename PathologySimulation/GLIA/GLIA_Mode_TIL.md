@@ -1,7 +1,6 @@
 ---
 type:
   - project
-  - thesis
 status: done
 thesis: "[[GLIA_Mode_General]]"
 module: 对GLIA TIL模式的解析

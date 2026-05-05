@@ -613,13 +613,13 @@ mpirun --allow-run-as-root -np 1 ./build/release/tusolver -config ./results/inve
 
 ![[Pasted image 20260503110649.png]]
 
-## 3. 患者数据测试
+# 3. 患者数据测试
 
 ```Plain
 scp -P 39159 -r D:\Learing_TANG\GraduateProject\CodeProject\PathologySimulation\GLIA-master\patientdata\BraTS-GLI-00006-000\GLIA_Input_nc root@region-46.seetacloud.com:/root/GLIA/input/
 ```
 
-### 3.1.1 创建 no-mass-effect inverse 脚本
+## 3.1 创建 no-mass-effect inverse 脚本
 
 ```Plain
 cp scripts/inverse.py scripts/inverse_patient001_no_mass_effect.py
@@ -673,7 +673,7 @@ find /root/GLIA/results/patient_001/no_mass_effect -name "*c0*"
 
 ![[Pasted image 20260503110822.png]]
 
-### 3.1.2 创建 mass-effect inverse 脚本
+## 3.2 创建 mass-effect inverse 脚本
 
 ```Plain
 cp scripts/inverse_masseffect.py scripts/inverse_patient001_masseffect_atlas001.py
@@ -713,4 +713,88 @@ mpirun --allow-run-as-root -np 1 build/last/tusolver -config /root/GLIA/results/
 scp -P 39159 -r root@region-46.seetacloud.com:/root/GLIA/results/patient_001/mass_effect_atlas_001 "D:\Learing_TANG\GraduateProject\CodeProject\PathologySimulation\GLIA-master\patientdata\BraTS-GLI-00006-000\GLIA_Results\"
 
 scp -P 39159 -r root@region-46.seetacloud.com:/root/GLIA/results/patient_001/no_mass_effect "D:\Learing_TANG\GraduateProject\CodeProject\PathologySimulation\GLIA-master\patientdata\BraTS-GLI-00006-000\GLIA_Results\"
+```
+
+## 3.3 创建 forward 脚本
+
+```
+cd /root/GLIA
+mkdir -p /root/GLIA/results/patient_001/forward_from_c0_masseffect
+cp scripts/forward.py scripts/forward_patient001_from_c0_masseffect.py
+```
+
+编辑 forward_patient001_from_c0_masseffect.py
+- 先将mass effect得到的`rho`、`kappa/k`、`gamma`参数替换
+```
+cat /root/GLIA/results/patient_001/mass_effect_atlas_001/reconstruction_info.dat
+```
+![[Pasted image 20260505143432.png]]
+```
+p['n'] = 128
+p['output_dir'] = '/root/GLIA/results/patient_001/forward_from_c0_masseffect/'
+p['a_seg_path'] = '/root/GLIA/input/GLIA_Input_nc/atlases/atlase_001/IXI566-HH-2535-T1_to_patient_altas_seg.nc'
+p['mri_path'] = '/root/GLIA/input/GLIA_Input_nc/atlases/atlase_001/IXI566-HH-2535-T1_to_patient_warped.nc'
+p['solver'] = 'forward'
+p['model'] = 4  
+p['syn_flag'] = 0
+# 用 inverse_masseffect 反演得到的初始肿瘤作为 forward 初始条件
+p['d0_path'] = '/root/GLIA/results/patient_001/mass_effect_atlas_001/c0_rec.nc'
+# 建议也显式指定患者终末肿瘤，用于对照/避免默认路径  
+p['d1_path'] = '/root/GLIA/input/GLIA_Input_nc/patients/patient_001/data.nc'
+
+p['time_history_off'] = 0
+
+p['rho_data'] = 11.0945                   # tumor parameters for synthetic data
+p['k_data'] =  0.0481775
+p['gamma_data'] =  75990.7  
+
+# 注释掉
+# p['user_cms'] = [(137,169,96,1)]
+```
+
+> `d0_path` 是 GLIA 官方参数系统支持的字段，含义就是 **initial condition for tumor**，不是随便编的参数
+> 建议把 `d1_path` 显式改成你的患者肿瘤终末观测，避免它误读默认 synthetic/example data
+> 注释掉 `p['user_cms'] = [(137,169,96,1)]`，不再使用默认的肿瘤种子点，而是使用反演出的`c0_rec.nc`
+
+![[Pasted image 20260505145107.png]]
+
+> p['solver'] = 'forward' 表示使用正向推演模式
+> p['model'] = 4 表示使用 mass-effect forward model
+> p['d0_path'] = '.../c0_rec.nc'  表示初始肿瘤来自你的反演结果
+> p['a_seg_path'] = '...atlas...seg.nc' 表示正向推演在哪个健康组织/atlas 结构上进行
+> p['mri_path'] = '...warped.nc' 用于可视化，不是最核心的肿瘤动力学输入
+
+
+生成配置文件，并检查是否完成
+```
+python3 scripts/forward_patient001_from_c0_masseffect.py
+ls -lh /root/GLIA/results/patient_001/forward_from_c0_masseffect/
+
+# 若之前有残留的文件，建议删除避免误判
+rm -rf /root/GLIA/results/patient_001/forward_from_c0_masseffect/*
+```
+
+应该能看到：`solver_config.txt`  `job.sh`
+
+>注意：
+	solver_config.txt中还有`user_cms=[(137, 169, 96, 1)]`
+	不用太紧张；这是 `params.py` 默认字段写出来的。但你的脚本里最好别主动设置它
+
+
+运行 forward solver
+```
+mpirun --allow-run-as-root -np 1 build/last/tusolver \
+-config /root/GLIA/results/patient_001/forward_from_c0_masseffect/solver_config.txt
+```
+![[Pasted image 20260505143130.png]]
+
+查看输出
+```
+find /root/GLIA/results/patient_001/forward_from_c0_masseffect -type f | head -100
+```
+![[Pasted image 20260505143223.png]]
+
+拷贝文件
+```
+scp -P 39159 -r root@region-46.seetacloud.com:/root/GLIA/results/patient_001/forward_from_c0_masseffect "D:\Learing_TANG\GraduateProject\CodeProject\PathologySimulation\GLIA-master\patientdata\BraTS-GLI-00006-000\GLIA_Results\"
 ```

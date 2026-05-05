@@ -55,6 +55,9 @@ patient_001_flair_aff2template.nii.gz
 `D:\Learing_TANG\GraduateProject\CodeProject\PathologySimulation\GLIA-master\patientdata\BraTS-GLI-00006-000-seg.nii.gz`
 
 ### 2. Inpainting（可选）
+
+#### neuroLIT
+
 **Theory：**
 使用fastwdm进行修复，使用Fastsurfer-neuroLIT进行修复
 1. 二值化seg
@@ -90,6 +93,22 @@ ls -lh ~/neurolit_weights
 docker run --gpus "device=all" --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 --rm -v "/mnt/d/Learing_TANG/GraduateProject/CodeProject/PathologySimulation/GLIA-master/patientdata/BraTS-GLI-00006-000/BraTS-GLI-00006-000-t1n.nii.gz:/mnt/d/Learing_TANG/GraduateProject/CodeProject/PathologySimulation/GLIA-master/patientdata/BraTS-GLI-00006-000/BraTS-GLI-00006-000-t1n.nii.gz:ro" -v "/mnt/d/Learing_TANG/GraduateProject/CodeProject/PathologySimulation/GLIA-master/patientdata/BraTS-GLI-00006-000/BraTS-GLI-00006-000-mask.nii.gz:/mnt/d/Learing_TANG/GraduateProject/CodeProject/PathologySimulation/GLIA-master/patientdata/BraTS-GLI-00006-000/BraTS-GLI-00006-000-mask.nii.gz:ro" -v "/mnt/d/Learing_TANG/GraduateProject/CodeProject/PathologySimulation/GLIA-master/patientdata/BraTS-GLI-00006-000:/mnt/d/Learing_TANG/GraduateProject/CodeProject/PathologySimulation/GLIA-master/patientdata/BraTS-GLI-00006-000" -v "$HOME/neurolit_weights:/usr/local/share/LIT/weights:ro" -u "$(id -u):$(id -g)" neurolit-local:fixed -i "/mnt/d/Learing_TANG/GraduateProject/CodeProject/PathologySimulation/GLIA-master/patientdata/BraTS-GLI-00006-000/BraTS-GLI-00006-000-t1n.nii.gz" -m "/mnt/d/Learing_TANG/GraduateProject/CodeProject/PathologySimulation/GLIA-master/patientdata/BraTS-GLI-00006-000/BraTS-GLI-00006-000-mask.nii.gz" -o "/mnt/d/Learing_TANG/GraduateProject/CodeProject/PathologySimulation/GLIA-master/patientdata/BraTS-GLI-00006-000"
 
 ```
+
+目前 neuroLIT 以改进使用，参考 [[Fastsurfer neuroLIT]]
+#### fastwdm
+
+基于这次的运行结果进行分析 `D:\Learing_TANG\TaskInpainting\fastWDM3D-main\fastWDM3D-main\WDM3D\runs\ours_wnet_128_split1000_val51_test200_seed42`
+[[fastwdm0427]]
+使用的是这次 1000/51/200 训练的最优权重
+```
+D:\micromamba\root\envs\fastwdm3d\python.exe WDM3D\David_eval\validate_test_david.py --test_data_dir "D:\Learing_TANG\TaskInpainting\fastWDM3D-main\fastWDM3D-main\WDM3D\David_eval\tmp_single_case_fastwdm_input" --checkpoint "D:\Learing_TANG\TaskInpainting\fastWDM3D-main\fastWDM3D-main\WDM3D\runs\ours_wnet_128_split1000_val51_test200_seed42\checkpoints\best_checkpoint_by_val.pt" --output_dir "D:\Learing_TANG\TaskInpainting\fastWDM3D-main\fastWDM3D-main\WDM3D\David_eval\tmp_single_case_fastwdm_output" --dataset_label single_case_fastwdm --model ours_wnet_128 --batch_size 1 --diffusion_steps 2 --gpu 0
+
+```
+
+生成的文件在
+`D:\Learing_TANG\GraduateProject\CodeProject\PathologySimulation\GLIA-master\patientdata\BraTS-GLI-00006-000\inpainting_volumes`
+`BraTS-GLI-00006-000-t1n-fastwdm.nii.gz`
+
 
 ### 3. SynthSeg
 艾影PC上完成
