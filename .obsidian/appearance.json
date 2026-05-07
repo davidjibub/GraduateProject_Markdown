@@ -2,5 +2,6 @@
   "theme": "moonstone",
   "cssTheme": "Minimal",
   "interfaceFontFamily": "Inter",
-  "nativeMenus": false
+  "nativeMenus": false,
+  "baseFontSize": 18
 }

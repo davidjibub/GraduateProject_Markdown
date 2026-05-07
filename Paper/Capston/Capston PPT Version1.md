@@ -1,6 +1,7 @@
 # 标题
 
-基于多模态 MRI与肿瘤生长建模的胶质瘤个体化术前辅助决策系统研究
+基于多模态 MRI与肿瘤生长建模的胶质瘤个体化辅助治疗系统研究
+#Todo 多模态？
 
 # 背景与意义
 
@@ -78,6 +79,11 @@
 ## 系统框架
 
 ![[系统框架图.png]]
+
+脑结构分析无法进行指标评估，指标无意义，侧重 XR 系统搭建！！！ 如何验证！！！
+![[Capston PPT Version1-1778153050146.png]]
+
+
 
 ## 胶质瘤多模态 MRI 分割
 
@@ -160,7 +166,7 @@
 |mask-healthy|在健康脑组织中构造合成缺损，用于监督训练和定量评价|
 
 4. 网络框架图
-	#Todo
+	![[wdm.png]]
 
 5. 系统框架图
 	模块最后加上：修复影像 → FreeSurfer / registration / simulation
@@ -190,9 +196,11 @@
 3. 评估指标
 	- PSNR / SSIM / MAE
 	- 下游任务成功率（Freesurfer异常值，指标异常？）
+		#Todo 
 4. 效果示意图
 	(best / worst / median)
 	原图 / Ground Truth / Prediction
+		#Todo 
 5. 下游任务验证图
 	- Original tumor T1 → FreeSurfer failed / unstable  
 	- Inpainted T1 → FreeSurfer success / better cortical metrics
@@ -202,6 +210,7 @@
 	![[Pasted image 20260505193658.png|240]]
 
 6. Baseline对比
+	使用wdm效果最好和最坏的各5例进行neuroLIT的采样对比，见[[Fastsurfer neuroLIT#^2777dc]]
 
 | 方法                  | MAE ↓ | SSIM ↑ | PSNR ↑ | FreeSurfer success ↑ |
 | ------------------- | ----: | -----: | -----: | -------------------: |
@@ -249,6 +258,10 @@
 	- ... [[GLIA_Mode_TIL]][[GLIA_Mode_masseffect]]
 	- 加入前向？？ #Todo 待确定？
 ![[pathology.png]]
+
+4. 算法流程图
+![[masseffect.png]]
+
 
 ### 现有结果
 

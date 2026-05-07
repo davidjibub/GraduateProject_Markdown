@@ -98,7 +98,7 @@ forward solve 的输入是：
 	$\gamma_k, \rho_k, \kappa_k, altastissue$
 
 输出是：
-	$c_1^pred​, VT^pred, WM^pred, GM^pred, CSF^pred, u, v$
+	$c_1^{pred}​,VT^{pred},WM^{pred},GM^{pred},CSF^{pred},u,v$
 
 #### Step4：计算 loss / objective
 
@@ -142,6 +142,9 @@ J(x)
 $$  
 注意：GM/WM/CSF mismatch 在代码中有相关实现痕迹，但当前被注释掉，实际 objective 主要使用 VT mismatch。
 
+- `mismatch` 就是“预测结果”和“观测/目标数据”之间的误差，同loss
+- $∣Ω∣_h​$  可以理解为离散网格上的体素体积因子。
+	- 它的作用是：把“单纯的数组平方和”转换成对连续空间积分的数值近似，使 loss 不完全依赖网格分辨率
 
 #### Step5：计算 gradient
 
@@ -253,13 +256,13 @@ GLIA 不是把所有方程一次性组成一个巨大的完全耦合非线性系
 
 ## Step 0：当前时刻已知
 在 $t^n$，你已经知道：
-$$p^n, i^n, n^n, o^n $$
-$$m_G^n, m_W^n, m_F^n$$
+$$p^n, i^n, n^n,o^n $$
+$$m_G^n, m_W^n, m_F^n$$
 $$u^n,v^n$$
 其中：
 - $p,i,n$：肿瘤各组分 ( prolifeactive 增殖，invasive 侵袭， necrotic坏死 )；
 - $o$：氧气；
-- $m_G, m_W, m_F$：灰质、白质、脑脊液等组织；
+- $m_G, m_W, m_F$：灰质、白质、脑脊液等组织；
 - $u$：组织位移；
 - $\vec{v}$：组织速度。
 
@@ -274,10 +277,14 @@ $$
 \\
 \frac{\partial m_G}{\partial t}+\nabla\cdot(m_Gv)=0
 \\
-\frac{\partial m_W}{\partial t}+\nabla\cdot(m_Wv)=0.
+\frac{\partial m_W}{\partial t}+\nabla\cdot(m_Wv)=0 
+\\
+\frac{\partial m_{VT}}{\partial t}+\nabla\cdot(m_{VT}v)=0 \\
+\frac{\partial m_{CSF}}{\partial t}+\nabla\cdot(m_{CSF}v)=0
 \end{aligned}
 $$
 ==代表”组织被tumor推着移动，细胞浓度和组织标签也一起移动“==
+==当前代码中 **oxygen 没有参与 advection**==
 
 ## Step 2：diffusion
 然后处理会扩散的变量，例如 invasive cells 和 oxygen
@@ -296,15 +303,137 @@ $$
 - i 侵袭型细胞向外浸润 
 - o 氧气/营养在组织中扩散
 
+> 当前代码实际没有执行这一步 oxygen diffusion
+> `o` 不做 PDE diffusion，只在后续 source/reaction 项里局部更新
+
+
 ## Step 3：reaction
 处理局部反应项，在每个空间点上，根据当前：
-$$p, i, n, o, m_G​, m_W​$$
+$$p, i, n, o, m_G​, m_W​$$
 计算：
-- p 增殖多少 
-- p→i 转换多少
-- i→p 转换多少 
-- o 被消耗多少
+- p 的增殖、死亡、p -> i、i -> p  
+- i 的增殖、死亡、p -> i、i -> p  
+- n 的坏死累积  
+- o 的消耗与恢复  
+- GM/WM 的减少
+
 这一步==没有空间导数==，可以理解为每个 voxel 自己内部发生生物反应
+
+#### 转化规则
+
+##### 1. 氧气调制的增殖率
+$$
+m(o) = \rho(x) \cdot \frac{1}{1+\exp[-100(o-o_{\mathrm{hypoxia}})]}
+$$
+	$o_{hypoxiao}$ 是缺氧阈值
+```
+oxygen 高于 hypoxia threshold：
+    sigmoid 接近 1
+    m(o) ≈ rho(x)
+    允许增殖
+
+oxygen 低于 hypoxia threshold：
+    sigmoid 接近 0
+    m(o) ≈ 0
+    增殖被抑制
+```
+所以不是简单“p 一定增殖”，而是：
+ - ==p 和 i 的 logistic growth 都受 oxygen 调制；氧气不足时增殖率下降==
+
+##### 2. 增殖p 和 侵袭i 的相互转换
+
+$$
+\begin{aligned}
+\alpha(o) = \alpha_0 \cdot \frac{1}{1+\exp[100(o-o_{\mathrm{inv}})]}
+\\
+\beta(o) = \beta_0 o
+\end{aligned}
+$$
+- $\alpha$：p -> i 的转换率  
+- $\beta$：i -> p 的转换率
+
+```
+缺氧环境下，增殖型细胞更倾向转为侵袭型细胞
+氧气充足时，侵袭型细胞更倾向转回增殖型细胞
+
+p→i 由低氧促进
+i→p 由高氧促进
+```
+
+##### 3. 缺氧坏死开关
+$$
+h(o) = \frac{1}{1+\exp[100(o-o_{\mathrm{hypoxia}})]}
+$$
+##### 4. p 的局部更新公式
+$$
+\frac{\partial p}{\partial t} = m(o)p(1-p) - \alpha(o)p + \beta(o)i - dh(o)p
+$$
+```
+m(o)p(1-p)：增殖型细胞 logistic growth
+-alpha(o)p：p 转成 i
++beta(o)i：i 转回 p
+-d h(o)p：缺氧导致 p 坏死
+```
+
+##### 5. i 的局部更新公式
+$$
+\frac{\partial i}{\partial t} = m(o)i(1-i) + \alpha(o)p - \beta(o)i - dh(o)i
+$$
+```
+m(o)i(1-i)：侵袭型细胞也有 logistic growth
++alpha(o)p：p 转成 i
+-beta(o)i：i 转回 p
+-d h(o)i：缺氧导致 i 坏死
+```
+
+```
+p 能增殖
+i 也能增殖
+p 和 i 能相互转换
+p 和 i 都能在缺氧下死亡并贡献坏死
+```
+
+##### 6. n 坏死细胞的作用
+
+```
+坏死细胞 nnn 的主要作用是：
+1. 累积死亡细胞/坏死组织
+2. 参与总肿瘤负荷 ctumor；
+3. 参与 mass-effect force 的生成
+4. 参与 advection，被组织速度场搬运
+```
+坏死细胞 **不会转回 p 或 i**，也不会增殖，也不会扩散
+$$
+\frac{\partial n}{\partial t} = d h(o)(p+i+m_G+m_W)
+$$
+
+##### 7. oxygen 的局部更新公式
+$$
+\frac{\partial o}{\partial t} = -c_o p + s_o(1-o)(m_G+m_W)
+$$
+- $c_o p$：proliferative cells 消耗氧气  
+- $s_o(1-o)(GM+WM)$：健康 GM/WM 区域供应/恢复氧气
+
+主要是 **proliferative cells 消耗 oxygen**
+
+##### 8. GM / WM 的局部减少
+
+GM / WM会因为肿瘤增长、侵袭扩散和缺氧死亡而减少
+$$
+f_G = \frac{m_G}{m_G+m_W}, \quad f_W = \frac{m_W}{m_G+m_W}
+$$
+$$
+\begin{aligned}
+\frac{\partial m_G}{\partial t} = -f_G\left[m(o)p(1-p) + m(o)i(1-i) + D_i\right] - h(o)d m_G
+\\
+\frac{\partial m_W}{\partial t} = -f_W\left[m(o)p(1-p) + m(o)i(1-i) + D_i\right] - h(o)d m_W
+\end{aligned}
+$$
+
+- ==肿瘤细胞增加会挤占/消耗健康 GM/WM==
+- ==缺氧也会使健康组织进入坏死累积==
+
+
 
 ## Step 4：更新总肿瘤负荷
 反应、扩散、搬运之后，你得到新的：
@@ -321,6 +450,9 @@ f^{n+1}=\gamma c_{\mathrm{tumor}}^{n+1}\nabla c_{\mathrm{tumor}}^{n+1}.
 $$
 肿瘤总量越大，边界梯度越强 ⇒ 越强的组织推挤力
 >这一步把 reaction–advection–diffusion PDE 的结果传给 elasticity PDE
+
+坏死细胞虽然不增殖、不扩散、不转化，但它通过 $c_t=p+i+n$ 参与 mass effect force
+
 
 ## Step 6：解 screened linear elasticity
 然后解：
@@ -371,15 +503,11 @@ $$
 	总的PDE在实际数值计算时，常常不会“一口气”直接解这个完整方程，而是把它拆成几个更简单的子问题
 	$advection→diffusion→reaction$
 	这叫 operator splitting，算子分裂
-$$\frac{\partial c}{\partial t}
-=
-\underbrace{-\nabla\cdot(cv)}_{\text{advection}}
-+
-\underbrace{\nabla\cdot(D\nabla c)}_{\text{diffusion}}
-+
-\underbrace{R(c)}_{\text{reaction}}.
+$$\frac{\partial c}{\partial t}=\underbrace{-\nabla\cdot(cv)}_{\text{advection}}+\underbrace{\nabla\cdot(D\nabla c)}_{\text{diffusion}}+\underbrace{R(c)}_{\text{reaction}}.
 $$
+
 	==它们不是代数拼接，而是**时间推进拼接**==
+	
 	- advection
 		描述的是：细胞浓度被速度场 v 搬运$$  
 \frac{\partial c}{\partial t}+\nabla\cdot(cv)=0  
