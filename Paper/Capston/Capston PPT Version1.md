@@ -3,6 +3,9 @@
 基于多模态 MRI与肿瘤生长建模的胶质瘤个体化辅助治疗系统研究
 #Todo 多模态？
 
+**侧重“建模与系统”**
+> 基于多模态MRI的胶质瘤生长建模与个体化辅助治疗系统
+
 # 背景与意义
 
 ## 医学临床背景
@@ -182,16 +185,22 @@
 		#Todo
 2. 模型超参数 [ pix2pix fastwdm ]
 
-|内容|示例|
+|内容|实际值|
 |---|---|
-|optimizer|AdamW / SGD|
-|learning rate|1e-4|
-|scheduler|cosine annealing / poly LR|
-|batch size|2 / 4|
-|patch size|128×128×128|
-|epochs|300 / 1000|
-|early stopping|是否使用|
-|hardware|GPU 型号|
+|model|ours_wnet_128|
+|optimizer|AdamW|
+|lr|2e-5|
+|scheduler|无；除非你额外传 lr_anneal_steps|
+|batch size|1|
+|crop size|128×128×128|
+|image_size 参数|128|
+|diffusion steps|2|
+|save interval|5000 steps|
+|val interval|5000 steps|
+|early stopping|否|
+|best checkpoint|是，按验证集 loss 选最优|
+|attention|否|
+|hardware|你通过 --gpu 指定的 CUDA GPU|
 
 3. 评估指标
 	- PSNR / SSIM / MAE
@@ -270,9 +279,15 @@
 	#Todo 待确定？
 2. 模型超参数
 	#Todo 待确定？
-3. 评估指标
+3. 评估指标  [[Pathology Simulation 领域研究]]
+	临床预测验证
 	- 多体素MRS
-	#Todo 待确定？
+	模型合理性验证
+	- 数值正确性验证（mesh convergence）
+	- 参数敏感性分析
+	- Dice（tumor cell density 阈值化与肿瘤区域的重叠）
+
+
 4. 效果示意图
 	MRS
 	c0/c_final, mri #Todo 待确定？
